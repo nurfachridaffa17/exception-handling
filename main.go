@@ -94,9 +94,42 @@ func simulateIntError() {
 	fmt.Println("Process success")
 }
 
+// Panic
+func divide(a, b int) int {
+	if b == 0 {
+		panic("division by zero is not allowed")
+	}
+	return a / b
+}
+
+// Recover from panic
+func safeDivide(a, b int) (result int) {
+	defer func() {
+		if r := recover(); r != nil {
+			fmt.Println("Recovered from panic:", r)
+		}
+	}()
+
+	if b == 0 {
+		panic("division by zero is not allowed")
+	}
+	return a / b
+}
+
+func divideByZero() {
+	divide(10, 0)
+}
+
+func divideByZeroRecover() {
+	result := safeDivide(10, 0)
+	fmt.Println(result)
+}
+
 func main() {
 	// auth()
 	// searchData()
 	// validationError()
-	simulateIntError()
+	// simulateIntError()
+	// divideByZero()
+	divideByZeroRecover()
 }
